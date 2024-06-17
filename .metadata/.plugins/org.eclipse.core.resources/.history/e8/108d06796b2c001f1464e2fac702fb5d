@@ -1,0 +1,10 @@
+package com.kh.spring.member.model.repository;
+
+import org.springframework.stereotype.Repository;
+
+//Repository :저장소
+//영속성 작업 - 메모리에서 유지
+@Repository
+public class MemberRepository {
+
+}

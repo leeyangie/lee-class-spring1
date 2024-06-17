@@ -1,0 +1,9 @@
+INDEX VERSION 1.4+C:\lee-class-workspace\.metadata\.plugins\org.eclipse.wst.jsdt.core\indexes
+968316451.index
+1351913201.index
+1402501785.index
+1197519833.index
+4194488898.index
+968316451.index
+180416206.index
+782164219.index
