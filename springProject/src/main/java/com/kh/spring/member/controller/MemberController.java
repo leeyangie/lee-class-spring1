@@ -2,7 +2,10 @@ package com.kh.spring.member.controller;
 
 import javax.servlet.http.HttpSession;
 
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -18,6 +21,7 @@ import lombok.extern.slf4j.Slf4j;
 public class MemberController {
 
 	private final MemberService memberService;
+	private final BCryptPasswordEncoder bcryptPasswordEncoder;
 	
 //	@RequestMapping("login.do")
 //	public String login(Member member) {
@@ -121,7 +125,8 @@ public class MemberController {
 	public ModelAndView login(Member member, ModelAndView mv, HttpSession session ) {
 		Member loginUser = memberService.login(member);
 		
-		if(loginUser !=null) {
+		
+		if( loginUser !=null && bcryptPasswordEncoder.matches(member.getUserPwd(), loginUser.getUserPwd())) {
 			session.setAttribute("loginUser", loginUser);
 			mv.setViewName("redirect:/");
 		} else {
@@ -129,5 +134,69 @@ public class MemberController {
 		}
 		return mv;
 	}
-//	
+	
+	@GetMapping("logout.do")
+	public String logout(HttpSession session) {
+	
+		// sessionScope에 존재하는 loginUser 제거
+		session.removeAttribute("loginUser");
+		// session.invalidate(); 세션자체를 날려버림
+		
+		return "redirect:/";
+	}
+	
+	@GetMapping("enroll.do")
+	public String enrollForm() {
+		
+		
+		return "member/enrollForm";
+	}
+	
+	@PostMapping("join.do")
+	public String join(Member member, Model model) {
+		
+		log.info("회원가입 객체 : {}", member);
+		
+		//log.info("평문 : {}", member.getUserPwd() );
+		String encPwd = bcryptPasswordEncoder.encode(member.getUserPwd());
+		//log.info("암호문 : {}", encPwd);
+		member.setUserPwd(encPwd);
+		// Insert할 데이터가 필드에 담긴 Member 객체의 userPwd필드에 평문이 아닌 암호문을 담아서 DB로 보내기.
+		
+		String viewName = "";
+		if(memberService.insert(member) > 0) {
+		
+			return "redirect:/";
+		
+		} else {
+			model.addAttribute("errorMsg", "회원가입실패");
+			viewName = "common/erroPage";
+		}
+		return viewName;
+	}
+	
+	@GetMapping("mypage.do")
+	public String mypage() {
+		return "member/myPage";
+	}
+	
+	@PostMapping("update.do")
+	public String update(Member member) {
+		
+		log.info("수정요청멤버 : {}", member);
+		
+		if(memberService.update(member) > 0) {
+			
+			memberService.login(member);
+			
+			return "redirect:mypage.do";
+		} else {
+			
+			
+		}
+		
+		return null;
+	}
+	
 }
+
