@@ -1,5 +1,7 @@
 package com.kh.spring.member.controller;
 
+import java.lang.ProcessBuilder.Redirect;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -181,21 +183,52 @@ public class MemberController {
 	}
 	
 	@PostMapping("update.do")
-	public String update(Member member) {
+	public String update(Member member, HttpSession session, Model model) {
 		
 		log.info("수정요청멤버 : {}", member);
 		
 		if(memberService.update(member) > 0) {
-			
-			memberService.login(member);
+			//DB로부터 수정된 회원정보를 다시 조회해서
+			//sessionScope에 loginUser라는 키값으로 덥ㅍ어씌워줄것
+			session.setAttribute("loginUser", memberService.login(member));
+			//회원정보 수정시 띄우는 alert메세지
+			session.setAttribute("alertMsg", "회원정보를 수정하였습니다.");
 			
 			return "redirect:mypage.do";
 		} else {
-			
-			
+			model.addAttribute("errorMsg","정보 수정에 실패했습니다");
+			return "common/errorPage";
 		}
 		
-		return null;
+	}
+	
+	@PostMapping("delete.do")
+	public String delete(Member member, HttpSession session, Model model) {
+		
+		//아이디 비밀번호
+		//비밀번호 일치하는지
+		//매개변수 Member => userPwd : 사용자가 입력한 비밀번호 평문
+		//session의 loginUser 키값으로 저장되어있는 Member 객체의 userPwd 필드 : DB에 기록된 암호화된 비밀번호
+		
+		String plainPwd = member.getUserPwd();
+		String encPwd = ((Member)session.getAttribute("loginUser")).getUserPwd();
+		//loginUser를 가져오면 object type 이라서 member로 형변환 (연산 우선순위 중요), 후에 getUserPwd해야함
+		
+		if(bcryptPasswordEncoder.matches(plainPwd, encPwd)) {
+			
+			if (memberService.delete(member.getUserId()) > 0) {
+				session.setAttribute("alertMsg", "탈퇴성공");
+				session.removeAttribute("loginUser");
+				return "rediret:/";
+			} else {
+				model.addAttribute("errorMsg", "회원탈퇴실패");
+				return "common/errorPage";
+			}
+			
+		} else {
+			session.setAttribute("alertMsg", "비밀번호가 일치하지 않습니다.");
+			return "redirect:mypage.do";
+		}
 	}
 	
 }

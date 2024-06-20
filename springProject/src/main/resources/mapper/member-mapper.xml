@@ -70,4 +70,18 @@
 		WHERE
 			USER_ID = #{userId}
 	</update>
+	
+	<update id="delete" >
+		UPDATE
+			MEMBER
+		SET
+			STATUS = 'N',
+			MODIFY_DATE = SYSDATE
+		WHERE
+			USER_ID = #{userId}
+	<!-- 변수에 어떻게 적어도 넘어온 데이터로 인식함 mybatis 특징 -->
+	</update>
+	
+	
+	
 </mapper>

@@ -89,7 +89,9 @@
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                 </div>
 
-                <form action="" method="post">
+                <form action="delete.do" method="post">
+                <!-- 회원탈퇴시 비밀번호는 암호화값이 중복될수 있기 때문에 해당 회원만 식별할 수 있는 아이디(PK) 값도 같이 있어야함 -->
+                	<input type="hidden" value=${ sessionScope.loginUser.userId }" name="userId"/>
                     <!-- Modal body -->
                     <div class="modal-body">
                         <div align="center">
@@ -102,9 +104,19 @@
                     </div>
                     <!-- Modal footer -->
                     <div class="modal-footer" align="center">
-                        <button type="submit" class="btn btn-danger">탈퇴하기</button>
+                        <button type="button" class="btn btn-danger" onclick="deletePrompt();">탈퇴하기</button>
                     </div>
                 </form>
+                
+                <script>
+                	function deletePrompt() {
+						const value = prompt('탈퇴를 원하신다면 "탈퇴합니다"를 정확히 입력해주세요.')	
+						return value === '탈퇴합니다' ? true : false;
+					}
+                
+                
+                
+                </script>
             </div>
         </div>
     </div>
