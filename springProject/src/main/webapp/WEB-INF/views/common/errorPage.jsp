@@ -11,6 +11,9 @@
 
 </head>
 <body>
+<!-- 메뉴바 -->
+    <jsp:include page="../common/menubar.jsp" />
+
 	<br>
     <div align="center">
         <img src="https://cdn2.iconfinder.com/data/icons/oops-404-error/64/208_balloon-bubble-chat-conversation-sorry-speech-256.png">

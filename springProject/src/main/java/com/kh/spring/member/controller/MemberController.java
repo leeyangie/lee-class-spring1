@@ -215,7 +215,8 @@ public class MemberController {
 		//loginUser를 가져오면 object type 이라서 member로 형변환 (연산 우선순위 중요), 후에 getUserPwd해야함
 		
 		if(bcryptPasswordEncoder.matches(plainPwd, encPwd)) {
-			
+		
+			log.info("회원아이디 :{}", )
 			if (memberService.delete(member.getUserId()) > 0) {
 				session.setAttribute("alertMsg", "탈퇴성공");
 				session.removeAttribute("loginUser");

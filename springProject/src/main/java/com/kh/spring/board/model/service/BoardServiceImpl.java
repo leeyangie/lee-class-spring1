@@ -1,13 +1,14 @@
 package com.kh.spring.board.model.service;
 
 import java.util.List;
+import java.util.Map;
 
+import org.apache.ibatis.session.RowBounds;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Service;
 
 import com.kh.spring.board.model.repository.BoardRepository;
 import com.kh.spring.board.model.vo.Board;
-import com.kh.spring.member.model.vo.Member;
 
 import lombok.RequiredArgsConstructor;
 
@@ -24,18 +25,18 @@ public class BoardServiceImpl implements BoardService {
 	}
 	
 	@Override
-	public int searchCount() {
-		return 0;
+	public int searchCount(Map<String, String> map) {
+		return boardRepository.searchCount(sqlSession, map);
 	}
 
 	@Override
-	public List<Board> findAll() {
-		return null;
+	public List<Board> findAll(Map<String,Integer> map) {
+		return boardRepository.findAll(sqlSession,map);
 	}
 
 	@Override
-	public List<Board> searchAll() {
-		return null;
+	public List<Board> findByConditionAndKeyword(Map<String, String> map, RowBounds rowBounds) {
+		return boardRepository.findByConditionAndKeyword(sqlSession, map, rowBounds);
 	}
 
 	@Override
@@ -63,6 +64,7 @@ public class BoardServiceImpl implements BoardService {
 		return 0;
 	}
 
+	
 	
 	
 	

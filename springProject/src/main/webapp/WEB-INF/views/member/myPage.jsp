@@ -100,11 +100,11 @@
                         </div>
                         <br>
                             <label for="userPwd" class="mr-sm-2">Password : </label>
-                            <input type="text" class="form-control mb-2 mr-sm-2" placeholder="Enter Password" id="userPwd" name=""> <br>
+                            <input type="text" class="form-control mb-2 mr-sm-2" placeholder="Enter Password" id="userPwd" name="userPwd"> <br>
                     </div>
                     <!-- Modal footer -->
                     <div class="modal-footer" align="center">
-                        <button type="button" class="btn btn-danger" onclick="deletePrompt();">탈퇴하기</button>
+                        <button type="submit" class="btn btn-danger" onclick="return deletePrompt();">탈퇴하기</button>
                     </div>
                 </form>
                 
@@ -113,8 +113,6 @@
 						const value = prompt('탈퇴를 원하신다면 "탈퇴합니다"를 정확히 입력해주세요.')	
 						return value === '탈퇴합니다' ? true : false;
 					}
-                
-                
                 
                 </script>
             </div>

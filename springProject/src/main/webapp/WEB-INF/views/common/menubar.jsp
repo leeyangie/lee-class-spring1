@@ -69,10 +69,10 @@
 </head>
 <body>
 	<c:if test="${ not empty alertMsg }">
-	<script>
-		alertify.alert('알림','${alertMsg}');
-	</script>
-		<%-- <c:remove var="alertMsg"/> --%>
+		<script>
+			alertify.alert('알림','${alertMsg}');
+		</script>
+		<c:remove var="alertMsg" scope="session"/>
 	</c:if>
     <div id="header">
         <div id="header_1">
