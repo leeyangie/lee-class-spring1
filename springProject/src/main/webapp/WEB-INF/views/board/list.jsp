@@ -77,7 +77,8 @@
                   	</c:when>
                   	<c:otherwise>
 						<c:forEach items="${list }" var="board">
-							<tr>
+							<tr class="board-detail" id="boardNo-${board.bordNo }">
+							<!-- onclick="location.href='board-detail?boardNo=${board.boardNo}'" -->
 								<td>${ board.boardNo }</td>
 								<td>${ board.boardTitle }</td>
 								<td>${ board.boardWriter }</td>
@@ -95,6 +96,27 @@
                 </tbody>
             </table>
             <br>
+            
+            <script>
+            	$(() => {
+            		
+            		$('.board-detail').click(e => {
+            			//alert('하이하이'); 등 클릭하면 발생하는 이벤트
+            			//url변경해주는것이 목적
+            			//cosole.log(e.currentTarget.id.split('-')[1])  // 이벤트를 걸어놓은 요소
+            			//console.log($(e.currentTarget).childern().eq(0).text()); //tr의 자식요소의 제일 첫번째의 텍스트를 선택하게됨 
+            			// 자식요소를 찾으려면?
+            			// find('선택자') --> 활용도가 가장 높음
+            			// children() --> jQuery에 정의되어 있는 메서드 jQuery 방식으로 선택해야함
+            			// eq() 인자로 요소의 순번을 선택할 수 있음.
+            		
+            			location.href = 'board-detail?boardNo='+ e.currentTarget.id.split('-')[1]; //바꾸고싶은 객체명.속성이름 = '리터럴값'
+            		});
+            		
+            		//consol.dir(pagingArea);
+            		
+            	});
+            </script>
 
             <div id="pagingArea">
                 <ul class="pagination">

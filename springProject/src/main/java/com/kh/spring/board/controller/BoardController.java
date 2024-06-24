@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.spring.board.model.service.BoardService;
 import com.kh.spring.board.model.vo.Board;
@@ -190,6 +191,7 @@ public class BoardController {
 		
 		//존재할 경우 -> 파일 업로드
 		if(!upfile.getOriginalFilename().equals("")) {
+			/*
 			//파일명 : kh_년월일시분초_랜덤한값.확장자
 			String originName = upfile.getOriginalFilename();
 			String ext = originName.substring(originName.lastIndexOf("."));
@@ -212,22 +214,114 @@ public class BoardController {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+			*/
 			
-			board.setOriginName(originName);
-			board.setChangeName(savePath+changeName);
+			saveFile(upfile, session);
+			
+			board.setOriginName(upfile.getOriginalFilename());
+			board.setChangeName(saveFile(upfile,session));
 		
 		}
 		
 		if(boardService.insert(board) > 0) {
 			
 			session.setAttribute("alertMsg", "게시글 작성 성공~");
+			// 무조건 리다이렉트 해야함
+			// 데이터 중복방지 (중복 post요청 방지)
+			return "redirect:boardlist";
 		} else {
 			model.addAttribute("errorMsg", "게시글 작성 실패");
 			return "common/errorPage";
 		}
 		
 		
-		return "redirect:/boardForm.do";
+	}
+	// localhost/spring/board-detail?boardNo=???
+	@GetMapping("board-detail")
+	public ModelAndView findByBoardNo(int boardNo, ModelAndView mv) {
+		
+		// 파싱 (string -> int)
+		// int abc = Integer.parseInt("123");
+		
+		// 데이터 가공 --> 데이터가 1개라서 할 필요 없음
+		// 서비스 호출
+		if(boardService.increaseCount(boardNo) > 0) {
+			//실패할수 있기때문에
+			mv.addObject(boardService.findById(boardNo))
+			.setViewName("board/boardDetail");
+		} else {
+			
+			mv.addObject("errorMsg", "게시글 상세조회에 실패했습니다.").setViewName("common/errorPage");
+		}
+	
+		// 응답화면 지정
+		return mv;
+		 
+	}
+	//deleteById : Client 에게 정수형의 boardNo(Board테이블 PK)를 전달받아서 
+	
+	@PostMapping("boardDelete.do")
+	public String deleteById(int boardNo, String filePath, HttpSession session, Model model) {
+		
+		if(boardService.delete(boardNo)>0) {
+			
+			if(!"".equals(filePath)) { //null값이 나올수 있는 확률이 있기때문에 빈문자열을 기준으로 비교코드를 짜는게 중요함
+				new File(session.getServletContext().getRealPath(filePath)).delete();
+			}
+			
+			session.setAttribute("alertMsg", "게시글 삭제 성공");
+			return "redirect:boardlist";
+			
+		} else {
+			model.addAttribute("errorMsg", "게시글 삭제실패!");
+			return "common/errorPage";
+		}
 	}
 	
+	@PostMapping("boardUpdateForm.do")
+	public ModelAndView upadteForm(ModelAndView mv, int boardNo) {
+		
+		mv.addObject("board", boardService.findById(boardNo))
+		.setViewName("board/'boardUpdate");
+		return mv;
+	}
+	
+	@PostMapping("board-update.do")
+	public String update(Board board, MultipartFile reUpFile, HttpSession session) {
+		 //새로운 첨부파일이 존재하는가
+		if(!reUpFile.getOriginalFilename().equals("")) {
+			board.setOriginName(reUpFile.getOriginalFilename());
+			board.setChangeName(saveFile(reUpFile,session));
+			
+		}
+		if(boardService.update(board) >0) {
+			session.setAttribute("alertMsg", "수정성공");
+			return "";
+		} else {
+			session.setAttribute("errorMsg", "정보수정 실패");
+			return "common/erroPage";
+		}
+	}
+	
+	public String saveFile(MultipartFile upfile, HttpSession session) {
+		
+		String originName = upfile.getOriginalFilename();
+		String ext = originName.substring(originName.lastIndexOf("."));
+		
+		int num = (int)(Math.random() * 100) + 1;
+		
+		String currentTime = new SimpleDateFormat("yyyMMddHHmmss").format(new Date());
+		
+		String savePath = session.getServletContext().getRealPath("/resources/uploadFiles/");
+		String changeName = "KH_" + currentTime + "_" + num + ext;
+		
+		try {
+			upfile.transferTo(new File(savePath + changeName));
+		} catch (IllegalStateException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return " resources/uploadFiles/"+ changeName;
+	}
 }
