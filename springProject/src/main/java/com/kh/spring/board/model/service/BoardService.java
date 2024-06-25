@@ -42,7 +42,7 @@ public interface BoardService {
 
 	int boardCount();
 
-	
+	List<Board> selectImages();
 
 	
 	

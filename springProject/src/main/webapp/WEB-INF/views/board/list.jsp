@@ -77,7 +77,7 @@
                   	</c:when>
                   	<c:otherwise>
 						<c:forEach items="${list }" var="board">
-							<tr class="board-detail" id="boardNo-${board.bordNo }">
+							<tr class="board-detail" id="boardNo-${board.boardNo }">
 							<!-- onclick="location.href='board-detail?boardNo=${board.boardNo}'" -->
 								<td>${ board.boardNo }</td>
 								<td>${ board.boardTitle }</td>

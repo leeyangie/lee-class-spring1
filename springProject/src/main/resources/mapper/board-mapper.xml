@@ -122,8 +122,8 @@
 		  		 (
 		 		 SEQ_BNO.NEXTVAL,
 		 		 #{boardTitle},
-		 		 #{boardWriter},
 		 		 #{boardContent},
+		 		 #{boardWriter},
 		 		 #{originName},
 		 		 #{changeName}
 		 		 ) 
@@ -145,7 +145,7 @@
 		  <include refid="selectBoard"/>
 		    FROM
 		    	 BOARD
-		  WEHERE 
+		  WHERE 
 		  		 BOARD_NO = #{boardNo}
 	</select>
 	
@@ -170,5 +170,25 @@
 		  		BOARD_NO = #{boardNo}	
 	
 	</update>
+	
+	<select id="selectImages" resultType="board">
+	SELECT
+	        CHANGE_NAME changeName,
+	        BOARD_TITLE boardTitle,
+	        USER_NAME boardWriter,
+	        BOARD_CONTENT boardContent,
+	        CREATE_DATE createDate
+	  FROM
+	        BOARD, MEMBER
+	 WHERE
+	        BOARD.BOARD_WRITER = MEMBER.USER_ID
+	   AND    
+	        CHANGE_NAME IS NOT NULL
+	 ORDER
+	    BY
+	        BOARD_NO DESC
+	
+	
+	</select>
 	
 </mapper>

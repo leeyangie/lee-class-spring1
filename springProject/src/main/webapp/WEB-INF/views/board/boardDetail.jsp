@@ -60,11 +60,11 @@
 		                        파일이 존재하지 않습니다.
 		                    </td>
                     	</c:when>
-                    	<c:ohterwise>
+                    	<c:otherwise>
                     		<td colspan="3">
 		                        <a href="${board.changeName }" download="${board.originName }">${board.originName }</a>
 		                    </td>
-                    	</c:ohterwise>
+                    	</c:otherwise>
                     </c:choose>
                 </tr>
                 <tr>

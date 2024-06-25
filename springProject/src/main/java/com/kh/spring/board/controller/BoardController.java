@@ -228,7 +228,7 @@ public class BoardController {
 			session.setAttribute("alertMsg", "게시글 작성 성공~");
 			// 무조건 리다이렉트 해야함
 			// 데이터 중복방지 (중복 post요청 방지)
-			return "redirect:boardlist";
+			return "redirect:boardList";
 		} else {
 			model.addAttribute("errorMsg", "게시글 작성 실패");
 			return "common/errorPage";
@@ -270,7 +270,7 @@ public class BoardController {
 			}
 			
 			session.setAttribute("alertMsg", "게시글 삭제 성공");
-			return "redirect:boardlist";
+			return "redirect:boardList";
 			
 		} else {
 			model.addAttribute("errorMsg", "게시글 삭제실패!");
@@ -322,6 +322,16 @@ public class BoardController {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		return " resources/uploadFiles/"+ changeName;
+		return "resources/uploadFiles/"+ changeName;
 	}
+	
+	@GetMapping("image-board")
+	public String images(Model model) {
+		
+		//List<Board> images = boardService.selectImages();
+		model.addAttribute("board", boardService.selectImages());
+		
+		return "board/imageList";
+	}
+	
 }

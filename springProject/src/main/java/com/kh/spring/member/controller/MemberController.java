@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.kh.spring.member.model.service.MemberService;
@@ -216,7 +217,7 @@ public class MemberController {
 		
 		if(bcryptPasswordEncoder.matches(plainPwd, encPwd)) {
 		
-			log.info("회원아이디 :{}", )
+			//log.info("회원아이디 :{}", )
 			if (memberService.delete(member.getUserId()) > 0) {
 				session.setAttribute("alertMsg", "탈퇴성공");
 				session.removeAttribute("loginUser");
@@ -231,6 +232,26 @@ public class MemberController {
 			return "redirect:mypage.do";
 		}
 	}
+	
+	@ResponseBody
+	@GetMapping("idCheck.do")
+	public String checkId(String checkId) {
+		
+//		//log.info(checkId); // 잘 들어오는지 확인
+//		
+//		int result = memberService.idCheck(checkId);
+//		//SQL문이 먼저 생각해둬야 반환값을 어떤타입으로 받을지 알수 있음
+//		// 없음 NNNNY 있음 NNNNN
+//		
+//		if(result >0) {
+//			return "NNNNN"; 
+//		} else {
+//			return "NNNNY";
+//		}
+		return memberService.idCheck(checkId) > 0 ? "NNNNN" : "NNNNY";
+		//이렇게 하면 안됨
+	}
+		
 	
 }
 

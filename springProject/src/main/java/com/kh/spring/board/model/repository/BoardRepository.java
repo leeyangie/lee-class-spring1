@@ -49,4 +49,8 @@ public class BoardRepository {
 		return sqlSession.update("boardMapper.update", board);
 	}
 
+	public List<Board> selectImages(SqlSessionTemplate sqlSession) {
+		return sqlSession.selectList("boardMapper.selectImages");
+	}
+
 }

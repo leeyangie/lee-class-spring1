@@ -82,6 +82,16 @@
 	<!-- 변수에 어떻게 적어도 넘어온 데이터로 인식함 mybatis 특징 -->
 	</update>
 	
+	<!-- 아이디 중복체크용 쿼리문 -->
+	<select id="idCheck" parameterType="string" resultType="_int">
+	   SELECT
+			  COUNT(*)
+	     FROM
+	     	  MEMBER
+	    WHERE
+	    	  USER_ID = #{checkId}
+	
+	</select>
 	
 	
 </mapper>
