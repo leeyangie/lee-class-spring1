@@ -16,11 +16,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.google.gson.Gson;
 import com.kh.spring.board.model.service.BoardService;
 import com.kh.spring.board.model.vo.Board;
+import com.kh.spring.board.model.vo.Reply;
 import com.kh.spring.common.model.vo.PageInfo;
 import com.kh.spring.common.template.PageTemplate;
 
@@ -94,6 +97,7 @@ public class BoardController {
 		//다같이 사용하기 힘든구조...나만아는 구조....
 		
 		PageInfo pageInfo = PageInfo.builder()
+									.startPage(startPage)
 									.listCount(listCount)
 									.currentPage(currentPage)
 									.pageLimit(pageLimit)
@@ -118,6 +122,8 @@ public class BoardController {
 		
 		model.addAttribute("list", boardList);
 		model.addAttribute("pageInfo", pageInfo);
+		
+		log.info("{}", pageInfo.getStartPage());
 		
 		
 		return "board/list";
@@ -334,4 +340,20 @@ public class BoardController {
 		return "board/imageList";
 	}
 	
+	@ResponseBody
+	@GetMapping(value="reply", produces="application/json; charset=UTF-8")
+	public String selectReply(int boardNo) {
+		boardService.selectReply(boardNo);
+		return new Gson().toJson(boardService.selectReply(boardNo));
+		
+	}
+	
+	@PostMapping("reply")
+	@ResponseBody
+	public String saveReply(Reply reply) {
+		
+		return boardService.insertReply(reply) > 0 ? "success" : "fail";
+	}
+
+
 }

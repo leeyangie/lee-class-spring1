@@ -252,6 +252,17 @@ public class MemberController {
 		//이렇게 하면 안됨
 	}
 		
-	
+	@ResponseBody
+	@GetMapping("pwdCheck.do")
+	public String checkPwd(String checkPwd, HttpSession session) {
+		log.info("비밀번호다!!: {}", checkPwd);
+		
+		String encPwd = ((Member)session.getAttribute("loginUser")).getUserPwd(); // 암호화된 비밀번호
+		log.info("암호화된 비밀번호:{}", encPwd);
+		if(bcryptPasswordEncoder.matches(checkPwd, encPwd)) {
+			log.info("체크완료? : {}" , bcryptPasswordEncoder.matches(checkPwd, encPwd));
+		}
+		return bcryptPasswordEncoder.matches(checkPwd, encPwd) ? "1" : "0";
+	}
 }
 

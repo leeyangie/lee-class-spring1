@@ -49,4 +49,6 @@ public class MemberServiceImpl implements MemberService {
 		return memberRepository.idCheck(sqlSession, checkId);
 	}
 
+	
+
 }

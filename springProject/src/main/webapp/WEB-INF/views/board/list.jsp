@@ -86,7 +86,7 @@
 								<td>${ board.createDate }</td>
 								<td>
 									<c:if test="${ not empty board.originName }">
-										&#128193;
+										😾
 									</c:if>
 								</td>
 							</tr>
@@ -120,22 +120,34 @@
 
             <div id="pagingArea">
                 <ul class="pagination">
-                    <li class="page-item disabled"><a class="page-link" href="#">이전</a></li>
-                    <c:forEach begin="${pageInfo.startPage }" end="${ pageInfo.endPage }" var="p">
-                    	<c:choose>
-                    	<c:when test="${ condition }">
-	                    	<li class="page-item">
-	                    		<a class="page-link" href="boardList?page=${p }">${p }</a>
-	                    	</li>
-                    	</c:when>
-                    	<c:otherwise>
-                    		<li class="page-item">
-	                    		<a class="page-link" 
-	                    		href="search.do?page=${p }&condition=${condition}&${keyword}">${p }</a>
-	                    	</li>
-                    	</c:otherwise>
-                    	</c:choose>
-                    </c:forEach>
+                <c:choose>
+					<c:when test="${ pageInfo.currentPage eq 1 }"> 
+					   <li class="page-item disabled">
+					      <a class="page-link" href="#">이전</a>
+					   </li>
+					</c:when>
+					<c:when test="${ not empty condition }">
+					   <li class="page-item">
+					      <a class="page-link" 
+					         href="search.do?page=${ pageInfo.currentPage - 1 }&condition=${condition}&keyword=${keyword}">이전</a>
+					   </li>
+					</c:when>
+                 </c:choose>
+                 <c:forEach begin="${pageInfo.startPage }" end="${ pageInfo.endPage }" var="p">
+					<c:choose>
+						<c:when test="${ not empty condition }">
+							<li class="page-item">
+								<a class="page-link" 
+								href="search.do?page=${p }&condition=${condition}&${keyword}">${p }</a>
+							</li>
+						</c:when>
+						<c:otherwise>
+							<li class="page-item">
+								<a class="page-link" href="boardList?page=${p }">${p }</a>
+							</li>
+						</c:otherwise>
+					</c:choose>
+                  </c:forEach>
                     <c:choose>
                     	<c:when test="${ pageInfo.maxPage eq pageInfo.currentPage }">
 		                    <li class="page-item disabled">

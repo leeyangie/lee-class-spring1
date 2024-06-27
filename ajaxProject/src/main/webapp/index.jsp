@@ -93,12 +93,12 @@
 				url : 'ajax1.do', //필수정의 속성(매핑값)
 				type : 'get', //요청 시 전달방식
 				data : { //요청 시 전달 값(key-value)
-					menuValue,
-					amountValue
+					menu : menuValue,
+					amount : amountValue
 				},
 				success : result => {
-					
-					const resultValue != 0? '선택하신 메뉴' + menuValue +' '+amountValue + '개의 가격은' + result + 'dnjs 입니다' : '값이 없습니다.'
+					console.log(result);
+					const resultValue =result != 0? '선택하신 메뉴' + menuValue +' '+amountValue + '개의 가격은' + result + 'dnjs 입니다' : '값이 없습니다.'
 					document.getElementById('resultMsg').innerHTML = resultValue;
 					
 				},
@@ -115,7 +115,110 @@
 		
 	</script>
 	
+	<br><br><br><br><br><br><br>
 	
+	
+	<h3>2. DB에서 SELECT문을 이용해서 조회했다는 가정하에 VO객체를 응다받아서 화면상에 출력해보기</h3>
+	조회할 음식번호 : <input type="number" id="menuNo"/> <br/><br/>
+	<button id="select-btn">조회</button>
+	
+	<div>
+	
+	
+	</div>
+	
+	<script>
+		
+		window.onload = () => {
+			document.getElementById('select-btn').onclick=()=>{
+				$.ajax({
+					
+					url : 'ajax3.do',
+					type : 'get',
+					data : {
+						menuNumber : document.getElementById('menuNo').value
+					},
+					success : result => {
+						console.log(result);
+						
+						const menu = '<ul>||오늘의 메뉴|| :'
+									+'<li>' + result.menuName+'</li>'
+									+'<li>' + result.price+'</li>'
+									+'<li>재료' + result.material+'</li>'
+									+'</ul>';
+						document.getElementById('today-menu').innerHTML = menu;
+					},
+					error : e => {
+						console.log(e);
+					}
+					
+				});	
+				
+			};
+		}
+	</script>
+	<br><br><br><br><br><br><br>
+	
+	<h3> 3. 조회 후 리스트를 응답받아서 출력</h3>
+	
+	<button  onclick=findAll()>메뉴 전체 조회</button>
+	<br><br>
+	
+	<table border="1" id="find-result">
+		<thead>
+			<tr>
+				<th>메뉴명</th>
+				<th>가격</th>
+				<th>재료</th>
+			</tr>
+		</thead>
+		<tbody>
+		
+		</tbody>
+	</table>
+	
+	<script>
+		function findAll(){
+			
+			$.ajax({
+			
+				url : 'find.do',
+				type: 'get',
+				success : result => {
+				    
+					console.log(result[0].menuName);
+					
+					
+					const trEl = document.createElement("tr");
+					
+					const tdFirst = document.createElement('td');
+					const firstText = document.createTextNode(result[0].menuName);
+					tdFirst.style.width ='200px';
+					tdFirst.appendChild(firstText);
+					console.log(tdFirst);
+					
+					const tdSecond = document.createElement('td');
+					const secondText = document.createTextNode(result[0].price);
+					tdSecond.style.width = '200px';
+					tdSecond.appendChild(secondText);
+					
+					const tdThird = document.createElement('td');
+					const thirdText = document.createTextNode(result[0].meterial);
+					tdThird.style.width = '200px';
+					tdThird.appendChild(thirdText);
+					
+					trEl.appendChild(tdFirst);
+					trEl.appendChild(tdSecond);
+					trEl.appendChild(tdThird);
+					
+					tbodyEl.appendChild(trEl);
+					
+				}
+			})
+		
+		}
+	
+	</script>
 	
 	</p>
 </body>
