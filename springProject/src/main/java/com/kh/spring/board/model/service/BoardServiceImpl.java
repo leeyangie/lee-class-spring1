@@ -80,6 +80,16 @@ public class BoardServiceImpl implements BoardService {
 		return boardRepository.insertReply(sqlSession, reply);
 	}
 
+	@Override
+	public Board boardAndReply(int boardNo) {
+		return boardRepository.boardAndReply(sqlSession, boardNo);
+	}
+
+	@Override
+	public List<Board> findTopBoard() {
+		return boardRepository.findTopBoard(sqlSession);
+	}
+
 	
 	
 	

@@ -354,6 +354,16 @@ public class BoardController {
 		
 		return boardService.insertReply(reply) > 0 ? "success" : "fail";
 	}
-
-
+	
+	@ResponseBody
+	@GetMapping("board-reply")
+	public Board boardAndReply(int boardNo) {
+		
+		return boardService.boardAndReply(boardNo);
+	}
+	
+	@GetMapping("var")
+	public String varForward() {
+		return "common/viewable";
+	}
 }

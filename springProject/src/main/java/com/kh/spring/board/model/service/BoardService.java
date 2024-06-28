@@ -49,6 +49,11 @@ public interface BoardService {
 	List<Reply> selectReply(int boardNo);
 
 	int insertReply(Reply reply);
+
+	Board boardAndReply(int boardNo);
+
+	//조회수 상위 5개 게시물
+	List<Board> findTopBoard();
 	
 	
 	// 댓글 작성

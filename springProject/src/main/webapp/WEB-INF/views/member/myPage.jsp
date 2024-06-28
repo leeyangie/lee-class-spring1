@@ -25,7 +25,7 @@
                     <input type="text" class="form-control" id="userName" value="${ sessionScope.loginUser.userName}" name="userName" required> <br>
 
 					<label for="userPwd">* PassWord : </label>
-                    <input type="password" class="form-control" id="userPwd" value="${ sessionScope.loginUser.userPwd}" name="userPwd" required readonly> <br>
+                    <input type="password" class="form-control" id="userPwd" value="${ sessionScope.loginUser.userPwd}" name="userPwd" required disabled> <br>
 						
                     <label for="email"> &nbsp; Email : </label>
                     <input type="text" class="form-control" id="email" value="${ sessionScope.loginUser.email}" name="email"> <br>
@@ -150,7 +150,7 @@
                     </div>
                     <!-- Modal footer -->
                     <div class="modal-footer" align="center">
-                        <button type="button" class="btn btn-danger" onclick="pwdUpdate()">확인</button>
+                        <button type="button" class="btn btn-danger" onclick="return pwdUpdate()">확인</button>
                     </div>
                 </form>
                 
@@ -216,7 +216,8 @@
 				    	if (password1 == password2) {
 				    		alertify.alert('비밀번호 변경 성공');
 				    		$('#passwordForm').modal('hide');
-				    		document.getElementById("userpwd").value = password1;
+				    		document.getElementById("userPwd").value = password1;
+				    		document.getElementById("userPwd").innerHTML = password1;
 				    	} else {
 				    		alertify.alert("비밀번호가 틀렸습니다. 다시 시도하세요.");
 				    	}
