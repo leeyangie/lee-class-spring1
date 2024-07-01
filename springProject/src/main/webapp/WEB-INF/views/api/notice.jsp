@@ -138,22 +138,158 @@
 		</div>
 	</div>
 
+<script>
+
+window.onload = () => {
+
+	findAll();
+	}
+	
+	
+	function isert() {
+		
+		const requestData = {
+				"noticeTitle" : $('#noticeTitle').val(),
+				"noticeWriter" : $('#noticeWriter').val(),
+				"noticeContent" : $(#noticeContent').val()
+		};
+		
+		$.ajax ({
+			url : 'notice',
+			type : 'post',
+			data : requestData,
+			success : response => {
+				console.log(response);
+				
+				//추가후 전체조회 다시하기
+				if(response.message === '서비스 요청 성공') {
+					$('#outerDiv').remove();
+					findAll();
+					$('#noticeTitle').val('');
+					$('#noticeContent').val('');
+				};
+			}
+		});
+		
+	}
+	
+	function deleteById(noticeNo) {
+		
+		$.ajax {
+			url : 'notice'+noticeNo,
+			type : 'delete',
+			success : response => {
+				
+				
+				
+			}
+		}
+		
+	}
+	
+	
+	$('#content').on('click', '.noticeEl', e => {
+		
+		const noticeNo = $(e.currentTarget).children().eq(0).text();
+		
+		$.ajax({
+			url:'notice/'+noticNo,
+			type : 'get',
+			success : response => {
+				console.log(response);
+				
+				const notice = response.data;
+				console.log(notice);
+				
+				const contentValue = '<div id="notice-detail">'
+								   + '<div>' + notice.noticeTitle + '</div>'
+								   + '<div>' + notice.noticeContent + '</div>'
+								   + '<div>'
+								   + '<a class="btn btn-sm btn warning" data-toggle="modal" herf="#updateModal">'
+								   + '수정하기'
+								   + '</a>' | '
+								   + '<a class"btn btn-sm btn-secondary">삭제하기</a>'
+								   + '</div>'
+								   + '</div>';
+								   
+			$('#detail').html(contentValue);
+			$('#detail').slideDown(500);
+			}
+			
+		});
+		
+	});
+	
+	const findAll = () => {
+		
+		$.ajax({
+			url : 'notice',
+			type : 'get',
+			success : response => {
+				
+				console.log(response);
+				const noticeList = response.data;
+				
+				const outerDiv = document.createElement('div');
+				outerDiv.id = 'outerDiv';
+				
+				console.log(outerDiv);
+				
+				noticeList.map(o => {
+					/*
+					const noticeEl = document.createElement('div');
+					noticeEl.className = 'noticeEl';
+					const numEl = document.createElement('div');
+					const numtext = document.createTextNode(o.noticeNo);
+					numEl.style.width = '50px';
+					numEl.appendChild(numText); //자식요소 추가 innerHTML X
+					
+					//console.log(numEl);
+					noticeEl.appendChild(numEl);
+					
+					const titleEl = document.createElement('div');
+					const titleText = document.createTextNode(o.noticeTitle);
+					titleEl.style.width = '400px';
+					titleEl.appendChild(titleText);
+					noticeEl.appendChild(titleEl);
+					
+					const writerEl = document.createElement('div');
+					const writerText = document.createTextNode(o.noticeWriter);
+					writerEl.style.width = '150px';
+					writerEl.appendChild(writerText);
+					noticeEl.appendChild(writerEl);
+					
+					const dateEl = document.createElement('div');
+					const dateText = document.createTextNode(o.createDate);
+					writerEl.style.width = '200px';
+					dateEl.appendChild(dateText);
+					noticeEl.appendChild(dateEl);
+					*/
+					
+					noticeEl.appendChild(createDiv(o.noticeNo, '50px'));
+					noticeEl.appendChild(createDiv(o.noticeTitle, '400px'));
+					noticeEl.appendChild(createDiv(o.noticeWriter, '150px'));
+					noticeEl.appendChild(createDiv(o.createDate, '200px'));
+					
+					outerDiv.appendChild(noticeEl);
+				});
+				document.getElementById('content').appendChild(outerDiv);
+			}
+		});
+	}
+	
+	function createDiv(data, style) {
+		const divEl = document.createElement('div');
+		const divText = document.createTextNode(o.createDate);
+		divEl.style.width = '200px';
+		divEl.appendChild(dataText);
+		
+		return divEl;
+	}
+
+
+</script>
 	
 
 </body>
 </html>
-접기
-
-
-
-수업자료
-세부정보
-채널 참여
-
-
-
-
-Slack 앱을 사용하여 클릭 한 번으로 팀과 함께 협업하세요.
-Windows용 Slack 다운로드
-
-수업자료 채널

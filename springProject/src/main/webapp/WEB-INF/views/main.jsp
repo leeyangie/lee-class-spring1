@@ -107,6 +107,16 @@
 				}
 			});
 		}
+		
+		function deleteTopFiveBoard(){
+			$.ajax({
+				url : 'boards'+ boardNo ,
+				type : 'delete',
+				success : response => {
+					
+			
+		}
+		
 	</script>
 	
 	<jsp:include page="common/footer.jsp"></jsp:include>

@@ -22,7 +22,7 @@ public class NoticeServiceImpl implements NoticeService {
 
 	@Override
 	public Notice findById(int noticeNo) {
-		return null;
+		return noticeMapper.findById(noticeNo);
 	}
 
 	@Override
