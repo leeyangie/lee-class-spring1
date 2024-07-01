@@ -146,12 +146,12 @@ window.onload = () => {
 	}
 	
 	
-	function isert() {
+	function insert() {
 		
 		const requestData = {
 				"noticeTitle" : $('#noticeTitle').val(),
 				"noticeWriter" : $('#noticeWriter').val(),
-				"noticeContent" : $(#noticeContent').val()
+				"noticeContent" : $('#noticeContent').val()
 		};
 		
 		$.ajax ({
@@ -175,7 +175,7 @@ window.onload = () => {
 	
 	function deleteById(noticeNo) {
 		
-		$.ajax {
+		$.ajax ({
 			url : 'notice'+noticeNo,
 			type : 'delete',
 			success : response => {
@@ -183,7 +183,7 @@ window.onload = () => {
 				
 				
 			}
-		}
+		});
 		
 	}
 	
@@ -192,8 +192,8 @@ window.onload = () => {
 		
 		const noticeNo = $(e.currentTarget).children().eq(0).text();
 		
-		$.ajax({
-			url:'notice/'+noticNo,
+		$.ajax ({
+			url:'notice/'+noticeNo,
 			type : 'get',
 			success : response => {
 				console.log(response);
@@ -207,7 +207,7 @@ window.onload = () => {
 								   + '<div>'
 								   + '<a class="btn btn-sm btn warning" data-toggle="modal" herf="#updateModal">'
 								   + '수정하기'
-								   + '</a>' | '
+								   + '</a>' 
 								   + '<a class"btn btn-sm btn-secondary">삭제하기</a>'
 								   + '</div>'
 								   + '</div>';
@@ -222,7 +222,7 @@ window.onload = () => {
 	
 	const findAll = () => {
 		
-		$.ajax({
+		$.ajax ({
 			url : 'notice',
 			type : 'get',
 			success : response => {
@@ -236,9 +236,10 @@ window.onload = () => {
 				console.log(outerDiv);
 				
 				noticeList.map(o => {
-					/*
+					
 					const noticeEl = document.createElement('div');
 					noticeEl.className = 'noticeEl';
+					/*
 					const numEl = document.createElement('div');
 					const numtext = document.createTextNode(o.noticeNo);
 					numEl.style.width = '50px';
@@ -280,7 +281,7 @@ window.onload = () => {
 	
 	function createDiv(data, style) {
 		const divEl = document.createElement('div');
-		const divText = document.createTextNode(o.createDate);
+		const divText = document.createTextNode(data);
 		divEl.style.width = '200px';
 		divEl.appendChild(dataText);
 		

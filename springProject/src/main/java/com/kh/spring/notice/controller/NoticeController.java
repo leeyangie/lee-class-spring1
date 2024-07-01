@@ -61,6 +61,7 @@ public class NoticeController {
 		
 		Message responseMsg = Message.builder()
 									 .message("조회요청에 성공했습니다")
+									 .data(notice)
 									 .build();
 		return ResponseEntity.status(HttpStatus.OK).body(responseMsg);
 	}
@@ -78,6 +79,7 @@ public class NoticeController {
 		Message responseMsg = Message.builder().data("공지사항 추가에 성공했습니다")
 											   .message("서비스요청성공")
 											   .build();
+		return ResponseEntity.status(HttpStatus.OK).body(responseMsg);
 		
 	}
 	
@@ -88,12 +90,12 @@ public class NoticeController {
 		int result = noticeService.delete(id);
 		
 		if(result == 0) {
-		return ResponseEntity.status(HttpStatus.OK).body(Message.builder()
-																.message("게시글 없음")
-																.build());
+			return ResponseEntity.status(HttpStatus.OK).body(Message.builder()
+																	.message("게시글 없음")
+																	.build());
 		}
 		Message responseMsg = Message.builder().data("삭제성공!").message("서비스처리성공").build();
-		return ResponseEntity.status(HttpStatus.BAD_REQUEST);
+		return ResponseEntity.status(HttpStatus.OK).body(responseMsg);
 				
 	}
 }

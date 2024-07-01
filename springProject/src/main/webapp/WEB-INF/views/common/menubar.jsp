@@ -99,7 +99,7 @@
         <div id="header_2">
             <ul>
                 <li><a href="#">HOME</a></li>
-                <li><a href="notices">공지사항</a></li>
+                <li><a href="/forward/notices">공지사항</a></li>
                 <li><a href="boardList">자유게시판</a></li>
                 <li><a href="image-board">사진게시판</a></li>
             </ul>
