@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -20,7 +22,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @RestController
-@RequestMapping("/notices")
+@RequestMapping("notice")
 @RequiredArgsConstructor
 public class NoticeController {
 
@@ -97,5 +99,24 @@ public class NoticeController {
 		Message responseMsg = Message.builder().data("삭제성공!").message("서비스처리성공").build();
 		return ResponseEntity.status(HttpStatus.OK).body(responseMsg);
 				
+	}
+	
+	@PutMapping
+	public ResponseEntity<Message> update(@RequestBody Notice noitce) {
+		
+		int result = noticeService.update(noitce);
+		
+		if(result == 0) {
+			return ResponseEntity.status(HttpStatus.OK).body(Message.builder()
+																	.message("공지사항 변경 실패")
+																	.build());
+		}
+		
+		Message responseMsg = Message.builder()
+									 .data(result)
+									 .message("공지사항 변경에 성공")
+									 .build();
+		return ResponseEntity.status(HttpStatus.OK).body(responseMsg);
+					
 	}
 }

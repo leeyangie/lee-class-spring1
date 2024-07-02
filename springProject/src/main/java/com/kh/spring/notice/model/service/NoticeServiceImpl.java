@@ -27,12 +27,12 @@ public class NoticeServiceImpl implements NoticeService {
 
 	@Override
 	public int save(Notice notice) {
-		return 0;
+		return noticeMapper.save(notice);
 	}
 
 	@Override
 	public int update(Notice notice) {
-		return 0;
+		return noticeMapper.update(notice);
 	}
 
 	@Override

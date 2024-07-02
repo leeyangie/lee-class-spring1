@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class NoticeForwardController {
 	
-	@GetMapping("/forward/notices")
+	@GetMapping("notices")
 	public String notices() {
 		return "api/notice";
 	}
