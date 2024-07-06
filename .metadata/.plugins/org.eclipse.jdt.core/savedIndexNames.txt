@@ -1,8 +1,7 @@
 INDEX VERSION 1.131+C:\Users\LYJ\Documents\GitHub\lee-class-spring1\.metadata\.plugins\org.eclipse.jdt.core
-2224184704.index
-1197519833.index
-2160205770.index
 3413861079.index
-1865797976.index
-1701043976.index
 3352539378.index
+1865797976.index
+2224184704.index
+1701043976.index
+1197519833.index

@@ -41,11 +41,24 @@
         align-items: center;
         justify-content: center;
         margin-top: 50px;
-        margin-bottom: 50px;
+        background-color: #eeeee4;
+        padding-bottom : 80px;
 	    }
 	    
 	    #listbutton {
 	    	margin : 20px auto;
+	    }
+	    
+	    #pagination-btn {
+	    	display: flex;
+        	align-items: center;
+        	justify-content: center;
+        	margin-top : 50px;
+	    }
+	    
+	    #Movie-enroll-list-card {
+	    	margin-top: 50px;
+	    	margin-bottom: 150px;
 	    }
 	    
     </style>
@@ -121,17 +134,12 @@
             <div class="tab-pane fade show active" id="pills-home" role="tabpanel">
                 <ul id="movieList" class="movies"></ul>
                 <nav aria-label="...">
-                    <ul class="pagination pagination-sm">
-                        <li class="page-item active">
-                            <span class="page-link" id="pageNo">1</span>
-                        </li>
-                        <li class="page-item">
-                            <a class="page-link" href="#" onclick="changePage(2)">2</a>
-                        </li>
-                        <li class="page-item">
-                            <a class="page-link" href="#" onclick="changePage(3)">3</a>
-                        </li>
-                    </ul>
+                    <nav aria-label="Page navigation example">
+					  <ul class="pagination" id="pagination-btn">
+					    <li class="page-item" id="p-pageNo"><a class="page-link" href="#">Previous</a></li>
+					    <li class="page-item" id="pageNo"><a class="page-link" href="#">Next</a></li>
+					  </ul>
+					</nav>
                 </nav>
             </div>
             <div class="tab-pane fade" id="pills-profile" role="tabpanel">
@@ -140,28 +148,36 @@
             </div>
         </div>
     </div>
+    <br>
+    <hr>
+    <br>
     <div id="page3">
 	    <div>
-	    선택한 영화
+	    <h2 class="mb-4">선택한 영화</h2>
 	    <br><br><br>
-	        <div class="card mb-8" style="max-width: 540px; margin-right: 50px">
-	            <div class="row g-0">
-	                <div class="col-md-4">
-	                    <img src="https://picsum.photos/200/250" class="img-fluid rounded-start" alt="...">
-	                </div>
-	                <div class="col-md-8">
-	                    <div class="card-body">
-	                        <h5 class="card-title">인사이드 아웃</h5>
-	                        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-	                        <p class="card-text"><small class="text-body-secondary">전체관람등급</small></p>
-	                    </div>
-	                </div>
-	            </div>
-	            <button type="button" class="btn btn-primary">등록하기</button>
-	        </div>
+	        <div class="row">
+            <div class="col-md-4 mt-5">
+                <img src="https://picsum.photos/300/450" class="img-fluid" alt="Movie Poster">
+            </div>
+            <div class="col-md-6 mt-5">
+                <h4 class="mb-4">영화 제목</h4>
+                <p class="lead">영화 줄거리 Lorem ipsum dolor sit amet consectetur adipisicing elit. Harum veniam sunt, quia sed error in explicabo.</p>
+                <p><strong>개봉일:</strong> 2023-01-01</p>
+                <p><strong>감독:</strong> 감독 이름</p>
+                <p><strong>출연:</strong> 배우 이름1, 배우 이름2, 배우 이름3</p>
+                <p><strong>장르:</strong> 드라마, 로맨스</p>
+                <p><strong>관람 등급:</strong> 15세 이상 관람 가능</p>
+                <p><strong>상영 시간:</strong> 120분</p>
+                <p><strong>평점:</strong> 4.5 / 5.0</p>
+                <div class="mt-4">
+                    <a href="#" class="btn btn-primary mr-3">등록하기</a>
+                </div>
+            </div>
+        </div>
         </div>
         <div class="card mb-4" id="Movie-enroll-list-card" style="width: 20rem;">
             <ul class="list-group list-group-flush">
+            	<li class="list-group-item text-primary"><p><strong>등록한 영화</strong></p></li>
                 <li class="list-group-item">인사이드 아웃</li>
                 <li class="list-group-item">핸섬가이즈</li>
                 <li class="list-group-item">매드맥스 사가</li>
@@ -283,7 +299,7 @@
                           + '<div class="card-body">'
                           + '<div class="btn-group">'
                           + '<button type="button" class="btn btn-sm btn-outline-secondary" onclick=viewDetail()>View</button>'
-                          + '<button type="button" class="btn btn-sm btn-outline-secondary" href>등록하기</button>'
+                          + '<button type="button" class="dudbtn btn-sm btn-outline-secondary" href>등록하기</button>'
                           + '</div>'
                           + '</div>'
                           + '</div>';
