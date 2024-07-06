@@ -5,12 +5,12 @@ import java.io.IOException;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
-import okhttp3.ResponseBody;
 
 @RestController
 @RequestMapping("movieList/")
@@ -33,7 +33,7 @@ public class MovieController {
 		// 요청 실행 및 응답 받기
         try (Response response = client.newCall(request).execute()) {
             // 응답 본문 추출
-            ResponseBody responseBody = response.body();
+            okhttp3.ResponseBody responseBody = response.body();
             if (responseBody != null) {
                 return responseBody.string();
             } else {
@@ -48,7 +48,7 @@ public class MovieController {
 		OkHttpClient client = new OkHttpClient();
 
 		Request request = new Request.Builder()
-		  .url("https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=1")
+		  .url("https://api.themoviedb.org/3/movie/upcoming?language=ko-KR&page=1&sort_by=popularity.desc")
 		  .get()
 		  .addHeader("accept", "application/json")
 		  .addHeader("Authorization", "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiIwNjU2OTQwNzBmNWI4MzJmMjVkYjRjNjZmY2JmZWExNSIsIm5iZiI6MTcyMDA2Mjc5Ni41OTIxNDksInN1YiI6IjY2N2NhYmNlMzQ3ZWM1MzNhYWViNGI3NCIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.WfXqF4gZs0s7v7N9TyGhAUHP_ut6LgIEjSs_Bge8vH0")
@@ -56,7 +56,7 @@ public class MovieController {
 
 		try (Response response = client.newCall(request).execute()) {
 	            // 응답 본문 추출
-	            ResponseBody responseBody = response.body();
+	            okhttp3.ResponseBody responseBody = response.body();
 	            if (responseBody != null) {
 	                return responseBody.string();
 	            } else {

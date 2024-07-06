@@ -36,6 +36,18 @@
             margin-top: 50px;
             margin-bottom: 50px;
         }
+        #page3 {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-top: 50px;
+        margin-bottom: 50px;
+	    }
+	    
+	    #listbutton {
+	    	margin : 20px auto;
+	    }
+	    
     </style>
 </head>
 <body>
@@ -82,6 +94,7 @@
             </div>
         </nav>
     </header>
+    <main>
     <div id="page1"></div>
     <div id="page2">
         <div>
@@ -123,38 +136,53 @@
             </div>
             <div class="tab-pane fade" id="pills-profile" role="tabpanel">
                 <hr/>
-                ...
+                 <ul id="movieUpList" class="movies"></ul>
             </div>
         </div>
     </div>
     <div id="page3">
-        <div class="card mb-3" style="max-width: 540px;">
-            <div class="row g-0">
-                <div class="col-md-4">
-                    <img src="https://picsum.photos/200/250" class="img-fluid rounded-start" alt="...">
-                </div>
-                <div class="col-md-8">
-                    <div class="card-body">
-                        <h5 class="card-title">인사이드 아웃</h5>
-                        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                        <p class="card-text"><small class="text-body-secondary">전체관람등급</small></p>
-                    </div>
-                </div>
-            </div>
-            <button type="button" class="btn btn-primary">등록하기</button>
+	    <div>
+	    선택한 영화
+	    <br><br><br>
+	        <div class="card mb-8" style="max-width: 540px; margin-right: 50px">
+	            <div class="row g-0">
+	                <div class="col-md-4">
+	                    <img src="https://picsum.photos/200/250" class="img-fluid rounded-start" alt="...">
+	                </div>
+	                <div class="col-md-8">
+	                    <div class="card-body">
+	                        <h5 class="card-title">인사이드 아웃</h5>
+	                        <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
+	                        <p class="card-text"><small class="text-body-secondary">전체관람등급</small></p>
+	                    </div>
+	                </div>
+	            </div>
+	            <button type="button" class="btn btn-primary">등록하기</button>
+	        </div>
         </div>
-        <div class="card" id="Movie-enroll-list-card" style="width: 20rem;">
+        <div class="card mb-4" id="Movie-enroll-list-card" style="width: 20rem;">
             <ul class="list-group list-group-flush">
                 <li class="list-group-item">인사이드 아웃</li>
                 <li class="list-group-item">핸섬가이즈</li>
                 <li class="list-group-item">매드맥스 사가</li>
+                <li class="list-group-item">매드맥스 사가</li>
+                <li class="list-group-item">매드맥스 사가</li>
+                <li class="list-group-item">매드맥스 사가</li>
+                <li class="list-group-item">매드맥스 사가</li>
+                <li class="list-group-item">매드맥스 사가</li>
+                <li class="list-group-item">매드맥스 사가</li>
+                <li class="list-group-item">매드맥스 사가</li>
+                <li class="list-group-item">매드맥스 사가</li>
             </ul>
-        </div>
-        <div id="listbutton">
+            <div id="listbutton" class="mt-3">
             <button type="button" class="btn btn-primary btn-sm">Small button</button>
             <button type="button" class="btn btn-secondary btn-sm" onclick="nextPage()">Small button</button>
+        	</div>
         </div>
+        
     </div>
+    </main>
+    
     <script>
         $(document).ready(function() {
             var currentPage = 1;
@@ -228,7 +256,7 @@
                     dataType: 'json',
                     data: { pageNo: pageNo },
                     success: function(data) {
-                        displayMovies(data);
+                        displayUpMovies(data);
                     },
                     error: function(jqXHR, textStatus, errorThrown) {
                         console.error('Error fetching movie data:', textStatus, errorThrown);
@@ -237,7 +265,7 @@
             }
 
             function displayUpMovies(data) {
-                var movieList = $('#movieList');
+                var movieList = $('#movieUpList');
                 movieList.empty();
                 if (data.results && data.results.length > 0) {
                     const movies = data.results;
@@ -266,21 +294,51 @@
                 }
             }
 
-            function changePage(pageNo) {
-                currentPage = pageNo;
-                $('#pageNo').text(pageNo);
-                fetchMovies(pageNo);
-            }
-
-            window.changePage = changePage;
-            window.nextPage = function() {
-                changePage(currentPage + 1);
-            }
-
-            fetchMovies(currentPage);
+            
+            fetchUpMovies(currentPage);
         });
     </script>
-    
+    <footer class="bg-dark text-light pt-5 pb-4">
+      <div class="container text-center text-md-left">
+          <div class="row text-center text-md-left">
+              <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mt-3">
+                  <h5 class="text-uppercase mb-4 font-weight-bold text-warning">Cine HY</h5>
+                  <p>최고의 영화 예매 사이트 Cine HY에 오신 것을 환영합니다. 다양한 최신 영화를 만나보세요.</p>
+              </div>
+
+              <div class="col-md-2 col-lg-2 col-xl-2 mx-auto mt-3">
+                  <h5 class="text-uppercase mb-4 font-weight-bold text-warning">Quick Links</h5>
+                  <p><a href="#" class="text-light" style="text-decoration: none;">Home</a></p>
+                  <p><a href="#" class="text-light" style="text-decoration: none;">Movies</a></p>
+                  <p><a href="#" class="text-light" style="text-decoration: none;">Theaters</a></p>
+                  <p><a href="#" class="text-light" style="text-decoration: none;">Booking</a></p>
+              </div>
+
+              <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mt-3">
+                  <h5 class="text-uppercase mb-4 font-weight-bold text-warning">Useful Links</h5>
+                  <p><a href="#" class="text-light" style="text-decoration: none;">Account</a></p>
+                  <p><a href="#" class="text-light" style="text-decoration: none;">Help</a></p>
+                  <p><a href="#" class="text-light" style="text-decoration: none;">Contact Us</a></p>
+                  <p><a href="#" class="text-light" style="text-decoration: none;">Privacy Policy</a></p>
+              </div>
+
+              <div class="col-md-4 col-lg-3 col-xl-3 mx-auto mt-3">
+                  <h5 class="text-uppercase mb-4 font-weight-bold text-warning">Contact</h5>
+                  <p><i class="fas fa-home mr-3"></i> Seoul, South Korea</p>
+                  <p><i class="fas fa-envelope mr-3"></i> info@cinehy.com</p>
+                  <p><i class="fas fa-phone mr-3"></i> + 82 10 1234 5678</p>
+                  <p><i class="fas fa-print mr-3"></i> + 82 10 8765 4321</p>
+              </div>
+          </div>
+
+          <div class="row align-items-center">
+              <div class="col-md-7 col-lg-8">
+                  <p class="text-center text-md-left">© 2023 Cine HY. All Rights Reserved.</p>
+              </div>
+
+          </div>
+      </div>
+  </footer>
     
     
     
